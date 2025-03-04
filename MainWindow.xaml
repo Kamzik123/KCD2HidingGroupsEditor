@@ -1,0 +1,73 @@
+﻿<Window x:Class="KCD2HidingGroupsEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KCD2HidingGroupsEditor"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        AllowDrop="False"
+        Title="KCD2 Hiding Groups Editor" Height="225" Width="527">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="35"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Label Grid.Row="1" Content="Input:" VerticalAlignment="Center" FontSize="18" Padding="0" Margin="5,0,0,0"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="TextBox_Input" Height="30" Width="370" HorizontalAlignment="Left" VerticalContentAlignment="Center" ToolTip="Input SKIN file or a folder containing SKIN files." AllowDrop="True" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+        <Button Name="Button_InputPicker" Content="..." Foreground="#606060" FontSize="20" Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Height="30" Width="30" Click="Button_InputPicker_Click"/>
+
+        <Label Grid.Row="3" Content="Output:" VerticalAlignment="Center" FontSize="18" Padding="0" Margin="5,0,0,0"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Name="TextBox_Output" Height="30" Width="370" HorizontalAlignment="Left" VerticalContentAlignment="Center" ToolTip="Output SKIN file or a folder for outputting processed files." AllowDrop="True" Drop="TextBox_Drop" PreviewDragOver="TextBox_PreviewDragOver"/>
+        <Button Name="Button_OutputPicker" Content="..." Foreground="#606060" FontSize="20" Grid.Row="3" Grid.Column="3" Margin="5,0,0,0" Height="30" Width="30" Click="Button_OutputPicker_Click"/>
+
+        <Grid Grid.Row="4" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Hiding Groups" Grid.Row="1" FontSize="18" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Name="CheckBox_Bit1" ToolTip="Group 0" Grid.Column="0" IsChecked="false" Height="16" Width="16" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <CheckBox Name="CheckBox_Bit2" ToolTip="Group 1" Grid.Column="1" IsChecked="true" Height="16" Width="16" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <CheckBox Name="CheckBox_Bit3" ToolTip="Group 2" Grid.Column="2" IsChecked="true" Height="16" Width="16" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <CheckBox Name="CheckBox_Bit4" ToolTip="Group 3" Grid.Column="3" IsChecked="true" Height="16" Width="16" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <CheckBox Name="CheckBox_Bit5" ToolTip="Group 4" Grid.Column="4" IsChecked="true" Height="16" Width="16" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <CheckBox Name="CheckBox_Bit6" ToolTip="Group 5" Grid.Column="5" IsChecked="true" Height="16" Width="16" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <CheckBox Name="CheckBox_Bit7" ToolTip="Group 6" Grid.Column="6" IsChecked="true" Height="16" Width="16" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <CheckBox Name="CheckBox_Bit8" ToolTip="Group 7" Grid.Column="7" IsChecked="true" Height="16" Width="16" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+
+            <Button Grid.Row="5" Width="50" Content="Patch" Click="Button_Patch_Click"/>
+        </Grid>
+    </Grid>
+</Window>

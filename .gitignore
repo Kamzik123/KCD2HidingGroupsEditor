@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+obj/
+publish/
+.vs/
+bin/
+Properties/PublishProfiles/
