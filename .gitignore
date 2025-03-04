@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+*.csproj.user
 
 obj/
 publish/
