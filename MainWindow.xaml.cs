@@ -56,8 +56,8 @@ namespace KCD2HidingGroupsEditor
                 MessageBox.Show("When an input folder is specified, you must specify an output folder instead of a file.", "Error");
             }
 
-            bool[] groups = new bool[] { (bool)CheckBox_Bit1.IsChecked!, (bool)CheckBox_Bit2.IsChecked!, (bool)CheckBox_Bit3.IsChecked!, (bool)CheckBox_Bit4.IsChecked!,
-                                         (bool)CheckBox_Bit5.IsChecked!, (bool)CheckBox_Bit6.IsChecked!, (bool)CheckBox_Bit7.IsChecked!, (bool)CheckBox_Bit8.IsChecked!};
+            bool[] groups = new bool[] { !(bool)CheckBox_Bit1.IsChecked!, !(bool)CheckBox_Bit2.IsChecked!, !(bool)CheckBox_Bit3.IsChecked!, !(bool)CheckBox_Bit4.IsChecked!,
+                                         !(bool)CheckBox_Bit5.IsChecked!, !(bool)CheckBox_Bit6.IsChecked!, !(bool)CheckBox_Bit7.IsChecked!, !(bool)CheckBox_Bit8.IsChecked!};
             uint hidingGroups = groups.ConstructByte();
 
             if (IsInputFolder)
