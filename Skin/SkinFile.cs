@@ -126,20 +126,24 @@ namespace KCD2HidingGroupsEditor.Skin
 
         public void PatchColors(uint newAlpha)
         {
+            int numVertices = 0;
             int colorsChunkIndex = 0;
 
             using (MemoryStream ms = new(MeshChunk!.Data!))
             {
                 using (BinaryReader chunkReader = new(ms))
                 {
-                    chunkReader.BaseStream.Position = 40; //Don't care
+                    chunkReader.BaseStream.Position = 8; //Don't care
+                    numVertices = chunkReader.ReadInt32();
+                    chunkReader.BaseStream.Position = 40; //Still don't care
                     colorsChunkIndex = chunkReader.ReadInt32();
                 }
             }
 
             if (colorsChunkIndex == 0)
             {
-                throw new Exception("Skin does not contain vertex colors.");
+                colorsChunkIndex = AddNewColorsChunk(numVertices, newAlpha);
+                return;
             }
 
             Chunk? colorsChunk = Chunks[colorsChunkIndex];
@@ -151,9 +155,7 @@ namespace KCD2HidingGroupsEditor.Skin
                 {
                     chunkReader.BaseStream.Position = 24; //Still don't care
 
-                    int count = (colorsChunk.Size - 24) / 4;
-
-                    for (int i = 0; i < count; i++)
+                    for (int i = 0; i < numVertices; i++)
                     {
                         colors.Add(chunkReader.ReadUInt32());
                     }
@@ -180,6 +182,75 @@ namespace KCD2HidingGroupsEditor.Skin
                     }
                 }
             }
+        }
+
+        public int AddNewColorsChunk(int numVertices, uint newAlpha)
+        {
+            int newChunkID = 0;
+            int lastOffset = 0;
+            int lastSize = 0;
+
+            foreach (var chunk in Chunks)
+            {
+                if (chunk.Key > newChunkID)
+                {
+                    newChunkID = chunk.Key;
+                }
+
+                chunk.Value.Offset += 16;
+
+                if (chunk.Value.Offset > lastOffset)
+                {
+                    lastOffset = chunk.Value.Offset;
+                    lastSize = chunk.Value.Size;
+                }
+            }
+
+            newChunkID++;
+
+            Chunk? colorsChunk = new();
+
+            using (MemoryStream ms = new())
+            {
+                using (BinaryWriter bw = new(ms))
+                {
+                    bw.Write(0);
+                    bw.Write(3);
+                    bw.Write(numVertices);
+                    bw.Write(4);
+                    bw.Write(0);
+                    bw.Write(0);
+
+                    for (int i = 0; i < numVertices; i++)
+                    {
+                        uint rgb = 0xFFFFFF;
+                        uint rgba = rgb | (newAlpha << 24); //Add the new alpha
+
+                        bw.Write(rgba);
+                    }
+                }
+
+                colorsChunk.Data = ms.ToArray();
+            }
+
+            colorsChunk.ChunkType = 0x1016;
+            colorsChunk.Version = 0x800;
+            colorsChunk.ID = newChunkID;
+            colorsChunk.Size = colorsChunk.Data.Length;
+            colorsChunk.Offset = lastOffset + lastSize;
+
+            Chunks.Add(newChunkID, colorsChunk);
+
+            using (MemoryStream ms = new(MeshChunk!.Data!)) //Gotta update the mesh chunk reference
+            {
+                using (BinaryWriter chunkWriter = new(ms))
+                {
+                    chunkWriter.BaseStream.Position = 40; //Don't care
+                    chunkWriter.Write(newChunkID);
+                }
+            }
+
+            return newChunkID;
         }
     }
 }
